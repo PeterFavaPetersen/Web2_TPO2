@@ -1,6 +1,6 @@
 <?php
 require_once './app/Model/apiMesaModel.php';
-require_once './app/View/apiMesaView.php';
+require_once './app/View/apiView.php';
 
 class apiMesaController {
     private $model;
@@ -8,7 +8,7 @@ class apiMesaController {
     private $data;
     
     public function __construct() {
-        
+
         $this->model = new MesaApiModel();
         $this->view = new ApiView();
         // lee el body del request
@@ -29,27 +29,42 @@ class apiMesaController {
     public function getMesa($params = null){
 
         // obtengo el id del arreglo de params
-        $id = $params[':ID'];
-        $mesadejuego = $this->model->get($id);
+        $id_mesadejuego = $params[':ID'];
+        $mesadejuego = $this->model->getMesaDeJuego($id_mesadejuego);
 
         // si no existe devuelvo 404
-        if ($mesadejuego)
-        $this->view->response($mesadejuego);
-        else 
-        $this->view->response("La tarea con el id=$id no existe", 404);
+        if ($mesadejuego){
+            $this->view->response($mesadejuego);
+        }
+        else {
+            $this->view->response("Hay un problema, la tarea con el id=$id_mesadejuego no existe", 404);
+        }
     }
     
     public function addMesa($params = null) {
 
         $mesadejuego = $this->getData();
-        //COMPLETAR
+
+        if (empty($mesadejuego->juego) || empty($mesadejuego->director) || empty($mesadejuego->cantidadJugadores)) {
+            $this->view->response("Hacen falta datos, por favor, dame datos", 400);
+        }else {
+            $id = $this->model->insertMesa($mesadejuego->juego, $mesadejuego->director, $mesadejuego->cantidadJugadores);
+            $mesadejuego = $this->model->getMesaDeJuego($id);
+            $this->view->response($mesadejuego, 201);
+        }
     }
 
     function deleteMesa($params = null) {
-        $id = $params[':ID'];
+        $id_mesadejuego = $params[':ID'];
 
-        $this->model->deleteMesa($id);
-        header("Location: " . BASE_URL);
+        $mesadejuego = $this->model->getMesaDeJuego($id_mesadejuego);
+        if ($mesadejuego) {
+            $this->model->deleteMesa($id_mesadejuego);
+            $this->view->response($mesadejuego);
+        } else {
+            $this->view->response("Hay un problema, la tarea con el id=$id_mesadejuego no existe", 404);
+        }
+        
     }
     
 }

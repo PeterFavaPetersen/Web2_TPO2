@@ -9,16 +9,16 @@ $router = new Router();
 /**/
 
 // define la tabla de ruteo
-//$router->addRoute('tabla', 'httpMethod', 'controller', 'funcionController'); 
+//$router->addRoute('tabla', 'httpMethod', 'constructorController', 'funcionController'); 
 //$router->addRoute('', '', '', ''); 
-$router->addRoute('mesadejuego', 'GET', '', ''); 
-$router->addRoute('mesadejuego/:ID', 'GET', '', ''); 
-$router->addRoute('mesadejuego/:ID', 'DELETE', '', ''); 
-$router->addRoute('mesadejuego', 'POST', '', ''); 
-$router->addRoute('campeones', 'GET', '', ''); 
-$router->addRoute('campeones/:ID', 'GET', '', ''); 
-$router->addRoute('campeones/:ID', 'DELETE', '', ''); 
-$router->addRoute('campeones', 'POST', '', ''); 
+$router->addRoute('mesadejuego', 'GET', 'apiMesaController', 'getMesas'); 
+$router->addRoute('mesadejuego/:ID', 'GET', 'apiMesaController', 'getMesa'); 
+$router->addRoute('mesadejuego', 'POST', 'apiMesaController', 'addMesa'); 
+$router->addRoute('mesadejuego/:ID', 'DELETE', 'apiMesaController', 'deleteMesa'); 
+$router->addRoute('campeones', 'GET', 'apiCampeonController', ''); 
+$router->addRoute('campeones/:ID', 'GET', 'apiCampeonController', ''); 
+$router->addRoute('campeones', 'POST', 'apiCampeonController', ''); 
+$router->addRoute('campeones/:ID', 'DELETE', 'apiCampeonController', ''); 
 
 
 // rutea
