@@ -1,6 +1,6 @@
 <?php
 require_once './app/Model/apiCampeonModel.php';
-require_once './app/Model/apiMesaController.php';
+require_once './app/Model/apiMesaModel.php';
 require_once './app/View/apiView.php';
 
 class apiCampeonController {
@@ -24,9 +24,27 @@ class apiCampeonController {
     public function getCapeones($params = null) {
         
         //Traigo la el contenido de cada Campeon.
+
+        //$mesadejuego = $this->model->getALLMesas();
+        //$this->view->response($campeones, $mesadejuego);
+
         $campeones = $this->model->getALLCampeones();
-        $mesadejuego = $this->model->getALLMesas();
-        $this->view->showCapeon($campeones, $mesadejuego);
+        $this->view->response($campeones);
+    }
+    
+    public function getCampeon($params = null){
+
+        // obtengo el id del arreglo de params
+        $id_campeon = $params[':ID'];
+        $campeon = $this->model->getCampeonId($id_campeon);
+
+        // si no existe devuelvo 404
+        if ($campeon){
+            $this->view->response($campeon);
+        }
+        else {
+            $this->view->response("Hay un problema, la tarea con el id=$id_campeon no existe", 404);
+        }
     }
 
     function addCampeon($params = null) {
@@ -37,17 +55,17 @@ class apiCampeonController {
             $this->view->response("Hacen falta datos, por favor, dame datos", 400);
         }else {
             $id_campeon = $this->model->insertCampeon($campeon->nombre, $campeon->id_juego, $campeon->duracion, $campeon->fecha);
-            $campeon = $this->model->getCampeon($id_campeon);
+            $campeon = $this->model->getCampeonId($id_campeon);
             $this->view->response($campeon, 201);
         }
     }
 
     function deleteCampeon($params = null) {
-        $campeon = $params[':ID'];
+        $id_campeon = $params[':ID'];
 
-        $campeon = $this->model->getCampeon($id_campeon);
+        $campeon = $this->model->getCampeonId($id_campeon);
         if ($campeon) {
-            $this->model->deleteMesa($id_campeon);
+            $this->model->deleteCampeon($id_campeon);
             $this->view->response($campeon);
         } else {
             $this->view->response("Hay un problema, la tarea con el id=$id_campeon no existe", 404);

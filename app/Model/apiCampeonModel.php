@@ -20,9 +20,30 @@ class CampeonApiModel{
         return $campeon;
     }
 
+    public function getCampeonId($id_campeones) {
 
+        $query = $this->db->prepare('SELECT * FROM `campeones` WHERE `id_campeones` = ?');
+        $query->execute([$id_campeones]);
 
+        $campeon = $query->fetch(PDO::FETCH_OBJ); 
 
+        return $campeon;
+    }
+
+    public function insertCampeon($nombre, $duracion, $fecha, $id_juego) {
+
+        $campeones = $this->db->prepare('INSERT INTO campeones (nombre, duracion, fecha, id_juego) VALUES (?, ?, ?, ?)');
+
+        $campeones->execute([$nombre, $duracion, $fecha, $id_juego]);
+
+        return $this->db->lastInsertId();
+    }
+    
+    function deleteCampeon($id_campeon) {
+
+        $campeones = $this->db->prepare('DELETE FROM `campeones` WHERE `id_campeones` = ?');
+        $campeones->execute([$id_campeon]);
+    }
 
 
 
