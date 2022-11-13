@@ -37,7 +37,7 @@ class apiMesaController {
             $this->view->response($mesadejuego);
         }
         else {
-            $this->view->response("Hay un problema, la tarea con el id=$id_mesadejuego no existe", 404);
+            $this->view->response("Hay un problema, la tarea con el id= $id_mesadejuego no existe. No puedo darte la mesa que me pedis", 404);
         }
     }
     
@@ -62,7 +62,7 @@ class apiMesaController {
             $this->model->deleteMesa($id_mesadejuego);
             $this->view->response($mesadejuego);
         } else {
-            $this->view->response("Hay un problema, la tarea con el id=$id_mesadejuego no existe", 404);
+            $this->view->response("Hay un problema, la tarea con el id=$id_mesadejuego no existe. No puedo borrar la mesa que me pedis", 404);
         }
         
     }

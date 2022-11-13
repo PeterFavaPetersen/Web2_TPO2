@@ -31,7 +31,7 @@ class apiCampeonController {
         $this->view->response($campeones);
     }
     
-    public function getCampeones($params = null){
+    public function getCampeon($params = null){
 
         // obtengo el id del arreglo de params
         $id_campeon = $params[':ID'];
@@ -42,7 +42,7 @@ class apiCampeonController {
             $this->view->response($campeon);
         }
         else {
-            $this->view->response("Hay un problema, la tarea con el id=$id_campeon no existe", 404);
+            $this->view->response("Hay un problema, la tarea con el id= $id_campeon no existe. No puedo darte el campeon que me pedis.", 404);
         }
     }
 
@@ -51,7 +51,7 @@ class apiCampeonController {
         $campeon = $this->getData();
 
         if (empty($campeon->nombre) || empty($campeon->id_juego) || empty($campeon->duracion) || empty($campeon->fecha)) {
-            $this->view->response("Hacen falta datos, por favor, dame datos", 400);
+            $this->view->response("Hacen falta datos, por favor, dame datos. Requiero todos los datos para agregar al campeon que quieres registrar. ESTO ES UN ERROR 400", 400);
         }else {
             $id_campeon = $this->model->insertCampeon($campeon->nombre, $campeon->id_juego, $campeon->duracion, $campeon->fecha);
             $campeon = $this->model->getCampeonId($id_campeon);
@@ -67,7 +67,7 @@ class apiCampeonController {
             $this->model->deleteCampeon($id_campeon);
             $this->view->response($campeon);
         } else {
-            $this->view->response("Hay un problema, la tarea con el id=$id_campeon no existe", 404);
+            $this->view->response("Hay un problema, la tarea con el id = $id_campeon no existe. No puedo borrar un campeon que no existe. ESTO ES UN ERROR 404", 404);
         }
     }
 

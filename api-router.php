@@ -16,8 +16,8 @@ $router->addRoute('mesadejuego/:ID', 'GET', 'apiMesaController', 'getMesa');
 $router->addRoute('mesadejuego', 'POST', 'apiMesaController', 'addMesa'); 
 $router->addRoute('mesadejuego/:ID', 'DELETE', 'apiMesaController', 'deleteMesa'); 
 
-$router->addRoute('campeones', 'GET', 'apiCampeonController', 'getCampeones'); 
-$router->addRoute('campeones/:ID', 'GET', 'apiCampeonController', 'addCampeon'); 
+$router->addRoute('campeones', 'GET', 'apiCampeonController', 'getCapeones'); 
+$router->addRoute('campeones/:ID', 'GET', 'apiCampeonController', 'getCampeon'); 
 $router->addRoute('campeones', 'POST', 'apiCampeonController', 'addCampeon'); 
 $router->addRoute('campeones/:ID', 'DELETE', 'apiCampeonController', 'deleteCampeon'); 
 

@@ -30,11 +30,11 @@ class CampeonApiModel{
         return $campeon;
     }
 
-    public function insertCampeon($nombre, $duracion, $fecha, $id_juego) {
+    public function insertCampeon($nombre, $id_juego, $duracion, $fecha) {
 
-        $campeones = $this->db->prepare('INSERT INTO campeones (nombre, duracion, fecha, id_juego) VALUES (?, ?, ?, ?)');
+        $campeones = $this->db->prepare('INSERT INTO campeones (nombre, id_juego, duracion, fecha) VALUES (?, ?, ?, ?)');
 
-        $campeones->execute([$nombre, $duracion, $fecha, $id_juego]);
+        $campeones->execute([$nombre, $id_juego, $duracion, $fecha]);
 
         return $this->db->lastInsertId();
     }
