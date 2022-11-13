@@ -1,6 +1,5 @@
 <?php
 require_once './app/Model/apiCampeonModel.php';
-require_once './app/Model/apiMesaModel.php';
 require_once './app/View/apiView.php';
 
 class apiCampeonController {
@@ -32,7 +31,7 @@ class apiCampeonController {
         $this->view->response($campeones);
     }
     
-    public function getCampeon($params = null){
+    public function getCampeones($params = null){
 
         // obtengo el id del arreglo de params
         $id_campeon = $params[':ID'];

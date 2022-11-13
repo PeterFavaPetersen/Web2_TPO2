@@ -1,7 +1,10 @@
 <IfModule mod_rewrite.c>
-	RewriteEngine On
+    RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
+    
+    RewriteCond %{HTTP:Authorization} ^(.+)$
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
 
     RewriteRule \.(?:css|js|jpe?g|gif|png)$ - [L]
