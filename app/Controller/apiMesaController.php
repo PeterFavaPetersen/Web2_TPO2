@@ -26,11 +26,36 @@ class apiMesaController {
     // }
 
     public function getMesas() {
+
+        $columnas = ['juego', 'director', 'cantidadJugadores'];
         
+        if(!isset($_GET['sort']) ){
+            $sort = 'id_mesadejuego';
+        }
+        if(isset($_GET['sort']) ){
+            
+            if(in_array($_GET['sort'], $columnas)){
+                $sort = $_GET['sort'];
+            } else {
+                $this->view->response("El dato insertado en el elemento sort es invalido", 400);
+            }
+        }
+
+
+        if(!isset($_GET['order']) ){
+            $order = 'ASC';
+        }
+        if(isset($_GET['order']) ){
+            if ( strtoupper($_GET['order'] == 'ASC') || (strtoupper($_GET['order'] == 'DESC') )){
+                $order = $_GET['order'];
+            } else {
+                $this->view->response("El dato insertado en el elemento order es invalido", 400);
+            }
+        }
         
+        $mesadejuego = $this->model->getALLMesas($sort, $order);
 
         
-        $mesadejuego = $this->model->getALLMesas();
         $this->view->response($mesadejuego);
     }
     
