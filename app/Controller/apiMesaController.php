@@ -27,12 +27,22 @@ class apiMesaController {
 
     public function getMesas() {
         
-        if((!empty($_GET['tabla'])) && (!empty($_GET['orden']))){
-            $tabla = $_GET['tabla'];
-            $orden = $_GET['orden'];
+        if((!empty($_GET['sort'])) && (!empty($_GET['order']))){
+            $tabla = $_GET['sort'];
+            $orden = $_GET['order'];
+            $mesadejuego = $this->model->getALLMesas($tabla, $orden);
+        } else if((!empty($_GET['order']))){
+            $tabla = null;
+            $orden = $_GET['order'];
+            $mesadejuego = $this->model->getALLMesas($tabla, $orden);
+        } else if((!empty($_GET['sort']))){
+            $tabla = $_GET['sort'];
+            $orden = null;
             $mesadejuego = $this->model->getALLMesas($tabla, $orden);
         } else{
-            $mesadejuego = $this->model->getALLMesas($tabla = null, $orden = null);
+            $tabla = null;
+            $orden = null;
+            $mesadejuego = $this->model->getALLMesas($tabla, $orden);
         }
         $this->view->response($mesadejuego);
     }

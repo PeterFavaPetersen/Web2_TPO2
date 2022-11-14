@@ -12,15 +12,22 @@ class MesaApiModel {
         // 1. la conexión a la DB ya esta abierta por el constructor de la clase
         
         // 2. ejecuto la sentencia (2 subpasos)
-        if(!empty($tabla) && !empty($orden)){
+        if( ( !empty($tabla) ) && ( !empty($orden) ) ) {
+
             $query = $this->db->prepare('SELECT * FROM `mesadejuego` ORDER BY $tabla $orden');
-        }
-        if(($orden == 'desc')||($orden == 'asc')){
+        } 
+        else if( ( !empty($tabla) ) && ( ($orden == 'desc')||($orden == 'asc') ) ) {
+
             $query = $this->db->prepare('SELECT * FROM `mesadejuego` ORDER BY `id_mesadejuego` $orden');
+        } 
+        else if( ( !empty($tabla) ) && ( ($orden == 'desc')||($orden == 'asc') ) ) {
+
+            $query = $this->db->prepare('SELECT * FROM `mesadejuego` ORDER BY $tabla asc');
+        } 
+        else{
+            
+            $query = $this->db->prepare('SELECT * FROM `mesadejuego` ORDER BY `cantidadJugadores` asc');
         }
-        // else{
-        //     $query = $this->db->prepare('SELECT * FROM `mesadejuego`');
-        // }
         $query->execute();
         // 3. obtengo los resultados
         $mesadejuego = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
