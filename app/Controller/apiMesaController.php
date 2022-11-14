@@ -27,23 +27,29 @@ class apiMesaController {
 
     public function getMesas() {
         
-        if((!empty($_GET['sort'])) && (!empty($_GET['order']))){
-            $tabla = $_GET['sort'];
-            $orden = $_GET['order'];
-            $mesadejuego = $this->model->getALLMesas($tabla, $orden);
-        } else if((!empty($_GET['order']))){
-            $tabla = null;
-            $orden = $_GET['order'];
-            $mesadejuego = $this->model->getALLMesas($tabla, $orden);
-        } else if((!empty($_GET['sort']))){
-            $tabla = $_GET['sort'];
-            $orden = null;
-            $mesadejuego = $this->model->getALLMesas($tabla, $orden);
-        } else{
-            $tabla = null;
-            $orden = null;
-            $mesadejuego = $this->model->getALLMesas($tabla, $orden);
-        }
+        // if((!empty($_GET['sort'])) && (!empty($_GET['order']))){
+        //     $tabla = $_GET['sort'];
+        //     $orden = $_GET['order'];
+        //     $mesadejuego = $this->model->getALLMesas($tabla, $orden);
+        // } 
+        // else if((empty($_GET['sort'])) && (!empty($_GET['order']))){
+        //     $tabla = null;
+        //     $orden = $_GET['order'];
+        //     $mesadejuego = $this->model->getALLMesas($tabla, $orden);
+        // } 
+        // else if((!empty($_GET['sort'])) && (empty($_GET['order']))){
+        //     $tabla = $_GET['sort'];
+        //     $orden = null;
+        //     $mesadejuego = $this->model->getALLMesas($tabla, $orden);
+        // } 
+        // else{
+        //     $tabla = null;
+        //     $orden = null;
+        //     $mesadejuego = $this->model->getALLMesas($tabla, $orden);
+        // }
+
+        
+        $mesadejuego = $this->model->getALLMesas();
         $this->view->response($mesadejuego);
     }
     
