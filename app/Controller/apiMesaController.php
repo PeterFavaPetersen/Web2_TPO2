@@ -20,9 +20,20 @@ class apiMesaController {
         return json_decode($this->data);
     }
     
-    public function getMesas($params = null) {
+    //public function getMesas($params = null) {
+    //     $mesadejuego = $this->model->getALLMesas();
+    //     $this->view->response($mesadejuego);
+    // }
+
+    public function getMesas() {
         
-        $mesadejuego = $this->model->getALLMesas();
+        if((!empty($_GET['tabla'])) && (!empty($_GET['orden']))){
+            $tabla = $_GET['tabla'];
+            $orden = $_GET['orden'];
+            $mesadejuego = $this->model->getALLMesas($tabla, $orden);
+        } else{
+            $mesadejuego = $this->model->getALLMesas($tabla = null, $orden = null);
+        }
         $this->view->response($mesadejuego);
     }
     

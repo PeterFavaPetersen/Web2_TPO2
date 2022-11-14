@@ -8,17 +8,37 @@ class MesaApiModel {
         $this->db = new PDO('mysql:host=localhost;' . 'dbname=db_sesion;charset=utf8', 'root', '');
     }
 
-    public function getALLMesas() {
+    public function getALLMesas($tabla, $orden) {
         // 1. la conexión a la DB ya esta abierta por el constructor de la clase
         
         // 2. ejecuto la sentencia (2 subpasos)
-        $query = $this->db->prepare('SELECT * FROM `mesadejuego`');
+        if(!empty($tabla) && !empty($orden)){
+            $query = $this->db->prepare('SELECT * FROM `mesadejuego` ORDER BY $tabla $orden');
+        }
+        if(($orden == 'desc')||($orden == 'asc')){
+            $query = $this->db->prepare('SELECT * FROM `mesadejuego` ORDER BY `id_mesadejuego` $orden');
+        }
+        // else{
+        //     $query = $this->db->prepare('SELECT * FROM `mesadejuego`');
+        // }
         $query->execute();
         // 3. obtengo los resultados
         $mesadejuego = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
 
         return $mesadejuego;
     }
+
+    // public function getALLMesas() {
+    //     // 1. la conexión a la DB ya esta abierta por el constructor de la clase
+        
+    //     // 2. ejecuto la sentencia (2 subpasos)
+    //     $query = $this->db->prepare('SELECT * FROM `mesadejuego`');
+    //     $query->execute();
+    //     // 3. obtengo los resultados
+    //     $mesadejuego = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
+
+    //     return $mesadejuego;
+    // }
 
     public function getMesaDeJuego($id_mesadejuego) {
         // 1. la conexión a la DB ya esta abierta por el constructor de la clase
