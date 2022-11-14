@@ -11,17 +11,7 @@ class MesaApiModel {
     public function getALLMesas($tabla = null, $orden = null) {
         // 1. la conexión a la DB ya esta abierta por el constructor de la clase
         
-        // 2. ejecuto la sentencia (2 subpasos)
-        // if(!empty($_GET['sort'])){
-        //     $tabla = $_GET['sort'];
-        // } else {
-        //     $tabla = null;
-        // }
-        // if(!empty($_GET['order'])){
-        //     $orden = $_GET['order'];
-        // } else {
-        //     $orden = null;
-        // }
+        
 
         if( ( !empty($tabla) ) && ( !empty($orden) ) ) {
 
@@ -35,7 +25,7 @@ class MesaApiModel {
 
             $query = $this->db->prepare('SELECT * FROM `mesadejuego` ORDER BY $tabla asc');
         } 
-        else{
+         else{
             
             $query = $this->db->prepare('SELECT * FROM `mesadejuego` ORDER BY `id_mesadejuego` asc');
         }
