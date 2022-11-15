@@ -8,7 +8,6 @@ class MesaApiModel {
     }
 
     public function getALLMesas($sort, $order, $limit) { 
-
         
         $conjunto = ("SELECT * FROM `mesadejuego` ORDER BY $sort $order LIMIT $limit ");
         // $conjunto = ('SELECT * FROM `mesadejuego` ORDER BY $sort $order'); Si en lugar de "" usas '' no lo toma.
@@ -18,18 +17,6 @@ class MesaApiModel {
         $mesadejuego = $query->fetchAll(PDO::FETCH_OBJ); 
         return $mesadejuego;
     }
-
-    // public function getALLMesas() {
-    //     // 1. la conexión a la DB ya esta abierta por el constructor de la clase
-        
-    //     // 2. ejecuto la sentencia (2 subpasos)
-    //     $query = $this->db->prepare('SELECT * FROM `mesadejuego`');
-    //     $query->execute();
-    //     // 3. obtengo los resultados
-    //     $mesadejuego = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
-
-    //     return $mesadejuego;
-    // }
 
     public function getMesaDeJuego($id_mesadejuego) {
 

@@ -11,7 +11,6 @@ class apiMesaController {
 
         $this->model = new MesaApiModel();
         $this->view = new ApiView();
-        // lee el body del request
         $this->data = file_get_contents("php://input");
     }
     
@@ -19,11 +18,6 @@ class apiMesaController {
         
         return json_decode($this->data);
     }
-    
-    //public function getMesas($params = null) {
-    //     $mesadejuego = $this->model->getALLMesas();
-    //     $this->view->response($mesadejuego);
-    // }
 
     public function getMesas() {
 
@@ -74,11 +68,9 @@ class apiMesaController {
     
     public function getMesa($params = null){
 
-        // obtengo el id del arreglo de params
         $id_mesadejuego = $params[':ID'];
         $mesadejuego = $this->model->getMesaDeJuego($id_mesadejuego);
-
-        // si no existe devuelvo 404
+        
         if ($mesadejuego){
             $this->view->response($mesadejuego);
         }

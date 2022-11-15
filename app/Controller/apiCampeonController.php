@@ -11,7 +11,6 @@ class apiCampeonController {
 
         $this->model = new CampeonApiModel();
         $this->view = new ApiView();
-        // lee el body del request
         $this->data = file_get_contents("php://input");
     }
 
@@ -19,17 +18,6 @@ class apiCampeonController {
 
         return json_decode($this->data);
     }
-
-    // public function getCapeones($params = null) {
-        
-    //     //Traigo la el contenido de cada Campeon.
-
-    //     //$mesadejuego = $this->model->getALLMesas();
-    //     //$this->view->response($campeones, $mesadejuego);
-
-    //     $campeones = $this->model->getALLCampeones();
-    //     $this->view->response($campeones);
-    // }
 
     public function getCapeones() {
         

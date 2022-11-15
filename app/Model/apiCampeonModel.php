@@ -9,13 +9,11 @@ class CampeonApiModel{
     }
 
     public function getALLCampeones($sort, $order, $limit) {
-        // 1. la conexión a la DB ya esta abierta por el constructor de la clase
-        
-        // 2. ejecuto la sentencia (2 subpasos)
+
         $query = $this->db->prepare("SELECT * FROM `campeones` ORDER BY $sort $order LIMIT $limit ");
         $query->execute();
-        // 3. obtengo los resultados
-        $campeon = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
+        
+        $campeon = $query->fetchAll(PDO::FETCH_OBJ); 
 
         return $campeon;
     }
