@@ -20,14 +20,61 @@ class apiCampeonController {
         return json_decode($this->data);
     }
 
-    public function getCapeones($params = null) {
+    // public function getCapeones($params = null) {
         
-        //Traigo la el contenido de cada Campeon.
+    //     //Traigo la el contenido de cada Campeon.
 
-        //$mesadejuego = $this->model->getALLMesas();
-        //$this->view->response($campeones, $mesadejuego);
+    //     //$mesadejuego = $this->model->getALLMesas();
+    //     //$this->view->response($campeones, $mesadejuego);
 
-        $campeones = $this->model->getALLCampeones();
+    //     $campeones = $this->model->getALLCampeones();
+    //     $this->view->response($campeones);
+    // }
+
+    public function getCapeones() {
+        
+        $columnas = ['nombre', 'id_juego', 'duracion', 'fecha'];
+        
+        if(!isset($_GET['sort']) ){
+            $sort = 'id_juego';
+        }
+        if(isset($_GET['sort']) ){
+            
+            if(in_array($_GET['sort'], $columnas)){
+                $sort = $_GET['sort'];
+            } else {
+                $this->view->response("El dato insertado en el elemento sort es invalido", 400);
+                die();
+            }
+        }
+
+        if(!isset($_GET['order']) ){
+            $order = 'ASC';
+        }
+        else/*(isset($_GET['order']) )*/{
+            if ( (strtoupper($_GET['order'] == 'ASC')) || (strtoupper($_GET['order'] == 'DESC') )){
+                $order = ($_GET['order']);
+                $order = strtoupper($order);
+            } else {
+                $this->view->response("El dato insertado en el elemento order es invalido", 400);
+                die();
+            }
+        }
+
+        if(!isset($_GET['limit']) ){
+            $limit = 10000000;
+        }
+        if(isset($_GET['limit']) ){
+            
+            if( ( ($_GET['limit']) >= 1 ) && ( is_numeric($_GET['limit']) ) ) {
+                $limit = ( $_GET['limit'] );
+            } else {
+                $this->view->response("El dato insertado en el elemento limit es invalido", 400);
+                die();
+            }
+        }
+
+        $campeones = $this->model->getALLCampeones($sort, $order, $limit);
         $this->view->response($campeones);
     }
     

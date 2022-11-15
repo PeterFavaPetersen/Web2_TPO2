@@ -1,26 +1,21 @@
 <?php 
 
 class MesaApiModel {
-    // Abro conexión a la DB
     private $db;
 
     public function __construct() {
         $this->db = new PDO('mysql:host=localhost;' . 'dbname=db_sesion;charset=utf8', 'root', '');
     }
 
-    public function getALLMesas($sort, $order) {
-        // 1. la conexión a la DB ya esta abierta por el constructor de la clase
+    public function getALLMesas($sort, $order, $limit) { 
 
-        $conjunto = ("SELECT * FROM `mesadejuego` ORDER BY $sort $order");
+        
+        $conjunto = ("SELECT * FROM `mesadejuego` ORDER BY $sort $order LIMIT $limit ");
         // $conjunto = ('SELECT * FROM `mesadejuego` ORDER BY $sort $order'); Si en lugar de "" usas '' no lo toma.
-
-        //$query = $this->db->prepare('SELECT * FROM `mesadejuego` ORDER BY `id_mesadejuego` asc');
 
         $query = $this->db->prepare($conjunto);
         $query->execute();
-        // 3. obtengo los resultados
-        $mesadejuego = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
-
+        $mesadejuego = $query->fetchAll(PDO::FETCH_OBJ); 
         return $mesadejuego;
     }
 
@@ -37,12 +32,9 @@ class MesaApiModel {
     // }
 
     public function getMesaDeJuego($id_mesadejuego) {
-        // 1. la conexión a la DB ya esta abierta por el constructor de la clase
-        
-        // 2. ejecuto la sentencia (2 subpasos)
+
         $query = $this->db->prepare('SELECT * FROM `mesadejuego` WHERE `id_mesadejuego` = ?');
         $query->execute([$id_mesadejuego]);
-        // 3. obtengo los resultados
         $mesadejuego = $query->fetch(PDO::FETCH_OBJ); 
 
         return $mesadejuego;
@@ -62,11 +54,4 @@ class MesaApiModel {
         $mesadejuego = $this->db->prepare('DELETE FROM `mesadejuego` WHERE `id_mesadejuego` = ?');
         $mesadejuego->execute([$id_mesadejuego]);
     }
-
-
-
-
-
-
-
 }

@@ -38,24 +38,37 @@ class apiMesaController {
                 $sort = $_GET['sort'];
             } else {
                 $this->view->response("El dato insertado en el elemento sort es invalido", 400);
+                die();
             }
         }
-
 
         if(!isset($_GET['order']) ){
             $order = 'ASC';
         }
-        if(isset($_GET['order']) ){
-            if ( strtoupper($_GET['order'] == 'ASC') || (strtoupper($_GET['order'] == 'DESC') )){
-                $order = $_GET['order'];
+        else/*(isset($_GET['order']) )*/{
+            if ( (strtoupper($_GET['order'] == 'ASC')) || (strtoupper($_GET['order'] == 'DESC') )){
+                $order = ($_GET['order']);
+                $order = strtoupper($order);
             } else {
                 $this->view->response("El dato insertado en el elemento order es invalido", 400);
+                die();
+            }
+        }
+
+        if(!isset($_GET['limit']) ){
+            $limit = 10000000;
+        }
+        if(isset($_GET['limit']) ){
+            
+            if( ( ($_GET['limit']) >= 1 ) && ( is_numeric($_GET['limit']) ) ) {
+                $limit = ( $_GET['limit'] );
+            } else {
+                $this->view->response("El dato insertado en el elemento limit es invalido", 400);
+                die();
             }
         }
         
-        $mesadejuego = $this->model->getALLMesas($sort, $order);
-
-        
+        $mesadejuego = $this->model->getALLMesas($sort, $order, $limit);
         $this->view->response($mesadejuego);
     }
     
