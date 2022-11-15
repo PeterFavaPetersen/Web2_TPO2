@@ -68,11 +68,9 @@ class apiCampeonController {
     
     public function getCampeon($params = null){
 
-        // obtengo el id del arreglo de params
         $id_campeon = $params[':ID'];
         $campeon = $this->model->getCampeonId($id_campeon);
 
-        // si no existe devuelvo 404
         if ($campeon){
             $this->view->response($campeon);
         }
